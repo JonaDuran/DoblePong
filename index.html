@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--05/11/13 - 03/03/14 - 20/05/14-->
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Pong</title>
+        <link rel="stylesheet" href="pong.css" type="text/css">
+
+        <script src="pong.js"></script>
+    </head>
+    <body>
+        <div id="caja">
+
+            <!-- Menú, puntos para ganar y para comenzar -->
+            <div class="menu">
+                <h1>Doble PONG</h1>
+                <br/>
+                <h2>con javascript</h2>
+                <label>Puntos </label>
+                <input id="puntos" type="number" max="20" min="1" value="10"/>
+                <br/>
+                <label id="start">Comenzar</label>
+            </div>
+
+            <!-- aparece cuando hay un ganador -->
+            <div id="win" class="menu">
+                <h1>El ganador es</h1>
+                <br/>
+                <h2 id="winer">el jugador </h2>
+                <a href="index.html">Jugar de nuevo</a>
+            </div>
+
+            <!-- bardas -->
+            <figure id="arriba" class="barra"></figure>
+            <figure id="abajo" class="barra"></figure>
+
+            <!-- puntaje  -->
+            <figure id="scoreP1" class="score">0</figure>
+            <figure id="scoreP2" class="score">0</figure>
+
+            <!-- figuras y letreros defondo -->
+            <figure id="line" class="fondo"></figure>
+            <figure id="circle" class="fondo">PAUSE</figure>
+            <figure id="keyW" class="key">W</figure>
+            <figure id="keyS" class="key">S</figure>
+            <figure id="keyP" class="key">P</figure>
+            <figure id="keyL" class="key">L</figure>
+            <figure id="pause" class="key">espacio/pause</figure>
+            <label id="info" class="key"></label>
+            <p id="nota" class="key">tome impulso para hacer una
+                bola rápida (2 puntos)</p>
+
+            <!-- jugadores -->
+            <figure id="p1" class="player"></figure>
+            <figure id="p2" class="player"></figure>
+            <figure id="bola"></figure>
+
+            <!-- barras laterales, aparecen cuando se hace un punto -->
+            <figure id="left" class="hit"></figure>
+            <figure id="rigth" class="hit"></figure>
+        </div>
+    </body>
+</html>
