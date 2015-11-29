@@ -1,7 +1,8 @@
-
+// crea las variables e inicia el juego, asignado al evento load
 function iniciar() {
     navegador = detectar();
-
+    
+    // objetos del juego
     p1 = document.getElementById("p1").style;
     p2 = document.getElementById("p2").style;
     bola = document.getElementById("bola").style;
@@ -10,10 +11,12 @@ function iniciar() {
     circle = document.getElementById("circle").style;
     scoreP1 = document.getElementById("scoreP1");
     scoreP2 = document.getElementById("scoreP2");
-
+    
+    // puentuaje de los jugadores
     scoreIntP1 = 0;
     scoreIntP2 = 0;
     winScore = 0;
+    
     //         W      S      P      L
     tecla = [false, false, false, false];   // true si la tecla esta abajo
     keyW = document.getElementById("keyW").style;
@@ -26,7 +29,8 @@ function iniciar() {
     datoP2 = 150;
     movimiento = 13;    //pixeles por pulsación para los P.
     pause = false;
-
+    
+    // variables de física
     anguloP1 = 0;       // inclementa segun el 'vuelo' del P.
     anguloP2 = 0;
     maxY = 7;           // velocidad máxima en Y
@@ -34,7 +38,8 @@ function iniciar() {
     maxPlus = 25;       // se asigna a maxX dependiendo el 'vuelo'
     maxX = maxNormal;
     fast = 10;
-
+    
+    // variables para manipular la bola
     bolaX = 0;          // coordenadas de la bola
     bolaY = 180;
     bolaMoveX = maxX;   // desplasamiento por frame
@@ -42,13 +47,21 @@ function iniciar() {
     bola.left = bolaX;      //inicial
     bola.top = bolaY;
 
+    // inicia el juego
     startGame();
 }
 
+// detecta donde se está ejecutando el juego
 function detectar() {
-    console.log('hola');
-    console.log(window.top !== window.self);
+    // si está en un iframe
+    if (window.top !== window.self) {
+        var body = document.getElementById("body").style;
+        body.marginLeft = -20 + 'px';
+        body.marginTop = -37 + 'px';
+        body.transform = 'scale(0.9)';
+    }
     
+    // detecta el navegador
     var navegador = navigator.userAgent;
     if (navegador.indexOf('MSIE') !== -1) {
         return "explorer";
@@ -64,10 +77,12 @@ function detectar() {
 }
 
 function startGame() {
+    // variables del menú
     var start = document.getElementById("start");
     var menu = document.getElementsByClassName("menu")[0].style;
     var puntos = document.getElementById("puntos");
-
+    
+    // inicia el juego
     start.onclick = function() {
         setInterval(game, 20);
         winScore = puntos.value;
@@ -77,20 +92,24 @@ function startGame() {
 
 }
 
+// se ejecuta el cada frame
 function game() {
+    // si está en pausa
     if (pause) {
         circle.color = "#e00";      // aparecer PAUSE
     }
+    
     else {
         circle.color = "transparent";   // desaparecer PAUSE
-        movePlayer();
-        keyColor();
-        bolaMove();
+        movePlayer();   // redibuja las barras de los jugadores
+        keyColor();     // marca las teclas presionadas
+        bolaMove();     // redibuja la bola
         //angulo();
-        gameOver();
+        gameOver();     // valida si ya ganó alguien
     }
 }
 
+// valida si ya ganó alguien
 function gameOver() {
     var winer;
     if (scoreIntP1 >= winScore)
@@ -107,12 +126,14 @@ function gameOver() {
     }
 }
 
+// muesta el angulo de la bola
 function angulo() {
     document.getElementById("info").textContent =
             anguloP1 + " " + anguloP2 + "\n" +
             bolaMoveX + " " + bolaMoveY;
 }
 
+// retorna el número asociado a un caracter
 function charKey(char) {
     switch (char) {
         case "W":
@@ -126,7 +147,8 @@ function charKey(char) {
     }
 }
 
-function keyDown(evt) {      //identifica teclas pulsadas
+// cuando se presiona una tecla
+function keyDown(evt) {      
     var key = String.fromCharCode(evt.keyCode);
     tecla[charKey(key)] = true;
 
@@ -138,6 +160,7 @@ function keyDown(evt) {      //identifica teclas pulsadas
     }
 }
 
+// cuando se deja de presionar una tecla
 function keyUp(evt) {
     var key = String.fromCharCode(evt.keyCode);
     tecla[charKey(key)] = false;
@@ -250,11 +273,12 @@ function restoreMaxX() {
 
 }
 
-function bolaMove() {        // animación de la bola
+// anima la bola y valida si colisionó
+function bolaMove() {
     var valorAbsoluto = Math.pow(bolaMoveX, 2);
     valorAbsoluto = Math.sqrt(valorAbsoluto);
 
-    // condiciones de colisiones
+    // si no hay colisión
     if (colision() === 0) {
         hitLeft.background = "none";
         hitRigth.background = "none";
@@ -274,7 +298,8 @@ function bolaMove() {        // animación de la bola
         }
 
     }
-
+    
+    // si colisiona la bola con el player 1
     else if (colision() === 1 && bolaMoveX === -valorAbsoluto) {
         if (navegador === "chrome") {
             p1.background = "-webkit-linear-gradient(left, #f00, #f55)";
@@ -289,6 +314,8 @@ function bolaMove() {        // animación de la bola
         bolaMoveX = -bolaMoveX;
         direccion(1);
     }
+    
+    // si colisiona la bola con el player 2
     else if (colision() === 2 && bolaMoveX === valorAbsoluto) {
         if (navegador === "chrome") {
             p2.background = "-webkit-linear-gradient(left, #f55, #f00)";
@@ -303,12 +330,16 @@ function bolaMove() {        // animación de la bola
         direccion(2);
         bolaMoveX = -bolaMoveX;
     }
+    
+    // si colisiona la bola con el límite izquerdo
     else if (colision() === 3) {
         hitLeft.background = "#f00";
         scoreIntP2++;
         scoreP2.textContent = scoreIntP2;
         restoreMaxX();
     }
+    
+    // si colisiona la bola con el límite derecho
     else if (colision() === 4) {
         hitRigth.background = "#f00";
         scoreIntP1++;
@@ -353,6 +384,7 @@ function bolaMove() {        // animación de la bola
     }
 }
 
+// valida si existe colisión
 function colision() {
     var puntoAx = bolaX;
     var puntoAy = bolaY + 20;
