@@ -46,6 +46,9 @@ function iniciar() {
 }
 
 function detectar() {
+    console.log('hola');
+    console.log(window.top !== window.self);
+    
     var navegador = navigator.userAgent;
     if (navegador.indexOf('MSIE') !== -1) {
         return "explorer";
