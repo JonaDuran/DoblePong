@@ -1,4 +1,5 @@
 # DoblePong
-Juego del Pong desarrollado con Javascript puro y para 2 jugadores.
 
-[Jugar aquí](https://cdn.rawgit.com/JonaDuran/DoblePong/master/index.html)
+Juego del Pong para 2 jugadores desarrollado con Javascript puro.
+
+[Jugar aquí](https://rawgit.com/JonaDuran/DoblePong/master/index.html)
