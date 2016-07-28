@@ -64,7 +64,7 @@ embed{
     top: 70px;
     border-width: 3px;
 
-    font-family: monospace;
+    font-family: "pock", monospace;
     color: transparent;
     font-size: 60px;
 }
@@ -178,7 +178,7 @@ embed{
     padding: 6px;
     border: solid #ddd;
     border-radius: 5px;
-    color: #ccc;
+    color: #aaa;
     font-size: 20px;
     font-family: Comfortaa, Calibri;
 }
